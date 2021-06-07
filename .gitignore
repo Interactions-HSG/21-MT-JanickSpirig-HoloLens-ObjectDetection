@@ -1,0 +1,4 @@
+**/checkpoints/
+**/data/
+**/weights/
+**/detector_yolov3/

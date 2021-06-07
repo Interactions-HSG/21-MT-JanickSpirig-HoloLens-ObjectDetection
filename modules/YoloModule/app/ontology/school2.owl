@@ -1,0 +1,285 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#"
+     xml:base="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2">
+        <rdfs:comment xml:lang="en">This is an ontology about school</rdfs:comment>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#admits -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#admits">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#School"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Student"/>
+        <rdfs:comment xml:lang="en">School admits students</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#employs -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#employs">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#School"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Staff"/>
+        <rdfs:comment xml:lang="en">School employs staff</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#learns -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#learns">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Student"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Subject"/>
+        <rdfs:comment xml:lang="en">Student learns the subject</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#teaches -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#teaches">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Teacher"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Student"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#JoinedON -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#JoinedON">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Student"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:comment xml:lang="en">indicates the join date of the student</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#staffID -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#staffID">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Staff"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#studentID -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#studentID">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Student"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#teach -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#teach">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Teacher"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Administrative -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Administrative">
+        <owl:equivalentClass rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Maintenance"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Non_Teaching"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Govt -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Govt">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#School"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#House_Keeping -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#House_Keeping">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Non_Teaching"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Junior_Student -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Junior_Student">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Student"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Maintenance -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Maintenance">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Non_Teaching"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Non_Teaching -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Non_Teaching">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Staff"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Private -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Private">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#School"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#School -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#School">
+        <rdfs:comment xml:lang="en">This class denotes the school</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Senior_Student -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Senior_Student">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Student"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Staff -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Staff">
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Student"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Student -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Student"/>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Subject -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Subject"/>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Supporting -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Supporting">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Non_Teaching"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Teacher -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Teacher">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Staff"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Nat -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Nat">
+        <owl:sameAs rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#tony"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#international_school -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#international_school">
+        <rdf:type rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#School"/>
+        <admits rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#rick"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#rick -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#rick">
+        <rdf:type rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Student"/>
+        <JoinedON rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2020-01-12T09:00:00</JoinedON>
+        <studentID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">S10001</studentID>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#tony -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#tony">
+        <rdf:type rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#Teacher"/>
+        <employs rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#tony"/>
+        <teaches rdf:resource="http://www.semanticweb.org/janickspirig/ontologies/2021/4/school2#rick"/>
+        <teach rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Science</teach>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
