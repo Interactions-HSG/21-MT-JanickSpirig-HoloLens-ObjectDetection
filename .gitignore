@@ -2,3 +2,6 @@
 **/data/
 **/weights/
 **/detector_yolov3/
+.vs_code/
+.DS_Store
+**.DS_Store
