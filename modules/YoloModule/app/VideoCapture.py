@@ -13,6 +13,7 @@ import time
 
 import VideoStream
 from VideoStream import VideoStream
+from OutgoingAPI import APIHandler
 
 #import YoloInference
 #from YoloInference import YoloInference
@@ -25,16 +26,18 @@ class VideoCapture(object):
 
     def __init__(
             self,
-            videoPath = "",
-            verbose = True,
-            videoW = 0,
-            videoH = 0,
-            fontScale = 1.0,
-            inference = True,
-            confidenceLevel = 0.5,
-            tiny = True,
-            show=False,
-            result_path="/Users/janickspirig/Desktop/results.avi"
+            videoPath,
+            verbose,
+            videoW,
+            videoH,
+            fontScale,
+            inference,
+            confidenceLevel,
+            custom,
+            tiny,
+            show,
+            result_path,
+            min_time
             ):
 
         self.videoPath = videoPath
@@ -52,9 +55,11 @@ class VideoCapture(object):
         self.displayFrame = None
         self.fontScale = float(fontScale)
         self.captureInProgress = False
+        self.custom = custom
         self.tiny = tiny
         self.show_result = show
         self.result_path = result_path
+        self.recommendation_thresh = min_time
 
         print("VideoCapture::__init__()")
         print("OpenCV Version : %s" % (cv2.__version__))
@@ -68,7 +73,8 @@ class VideoCapture(object):
         print("   - ConficenceLevel : " + str(self.confidenceLevel))
         print("")
 
-        self.yoloInference = Detector(tiny=self.tiny) # yolov4
+        self.yoloInference = Detector(tiny=self.tiny, custom=self.custom) # yolov4
+        self.apiHandler = APIHandler()
 
     def __IsCaptureDev(self, videoPath):
         try: 
@@ -200,23 +206,35 @@ class VideoCapture(object):
         currentFPS = cameraFPS
         perFrameTimeInMs = 1000 / cameraFPS
 
-
         # by default VideoCapture returns float instead of int
         if self.show_result: 
             codec = cv2.VideoWriter_fourcc(*"XVID")
-            out = cv2.VideoWriter(self.result_path, codec, 20, (frame_width, frame_height))
+            out = cv2.VideoWriter(self.result_path, codec, 24, (frame_width, frame_height))
+
+        index_boundary = None
+        detections_queue = []
+        last_fps = 0
 
         while True:
+
+            # timestamps = [cap.get(cv2.CAP_PROP_POS_MSEC)]
+            # calc_timestamps = [0.0]
+
             tFrameStart = time.time()
 
             if not self.captureInProgress:
                 break
-
             try:
                 if self.useStream:
                     frame = self.vStream.read()
+                    # add timestamp of frame
+                    # timestamps.append(cap.get(cv2.CAP_PROP_POS_MSEC))
+                    # calc_timestamps.append(calc_timestamps[-1] + 1000/fps)
                 else:
                     frame = self.vCapture.read()[1]
+                    # add timestamp of frame
+                    # timestamps.append(cap.get(cv2.CAP_PROP_POS_MSEC))
+                    # calc_timestamps.append(calc_timestamps[-1] + 1000/fps)
             except Exception as e:
                 print("ERROR : Exception during capturing")
                 raise(e)
@@ -226,7 +244,15 @@ class VideoCapture(object):
                 detections, image = self.yoloInference.detect(frame)
 
                 fps = 1.0 / (time.time() - tFrameStart)
+
+                # do we need to update index_boundary (this is the case when fps rate has changed significantly)
+                if (fps - last_fps) > 0.3:
+                    index_boundary = int(round(fps / (1/self.recommendation_thresh), 0))
+            
                 print("FPS: %.2f" % fps)
+
+                last_fps = fps
+
                 if self.show_result:
                     result = np.asarray(image)
                     result = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
@@ -238,14 +264,75 @@ class VideoCapture(object):
 
                 if cv2.waitKey(1) & 0xFF == ord('q'): break
                 '''
+                
+                # handle Object presence
                 if len(detections) > 0:
+                    queue_list = []
                     for detection in detections:
                         classLabel, confidence = detection[0], detection[1]
                         if confidence > self.confidenceLevel:
-                            # here we can now do something with the detection now as it is aboved the defined confidence level
+                            queue_list.append(classLabel)
+                            
                             print("Object: {}".format(classLabel))
                             print("Confidence: {}".format(confidence))
+                            try:
+                                if self.apiHandler.statusHandler.statuses[classLabel] != 1:
 
+                                    ThingIsThere = True
+                                    
+                                    if len(detections_queue) >= index_boundary:  
+                                        for i in detections_queue:
+                                            # check if thing has been detected x seconds ago
+                                            # print(i)
+                                            if any(classLabel in sl for sl in i):
+                                                continue
+                                            else:
+                                                ThingIsThere = False
+                                                break 
+                                    else:
+                                        ThingIsThere = False
+                                    
+                                    if ThingIsThere:
+                                        print("Thing is there")
+                                        self.apiHandler.handleThing(thing=classLabel, display=1) # send call to display all actions on the Hololens that are related with this object
+                            # when thing is not of interest to us
+                            except KeyError:
+                                pass
+                            
+                # build the new queue element
+                try:
+                    if len(queue_list) > 0:
+                        detections_queue.append(queue_list)
+                    else:
+                        # confidence too low
+                        detections_queue.append(["NaN"])
+                except NameError:
+                    # no detections at all
+                    detections_queue.append(["NaN"])
+                         
+                # update queue
+                first_element = len(detections_queue) - index_boundary
+                if first_element > 0:
+                    detections_queue = detections_queue[first_element:]
+
+                print(detections_queue)
+
+                # check if all object are still there
+                things_displayed = [thing for thing, pres in self.apiHandler.statusHandler.statuses.items() if pres == 1]
+
+                for thing in things_displayed: 
+                    # check if thing is still somewhere in the queue
+                    ThingIsThere = False
+                    for i in detections_queue:
+                        if any(thing in sl for sl in i):
+                            ThingIsThere = True
+                            break
+                    
+                    if not ThingIsThere:
+                        # don't show the thing anymore on the Hololens
+                        self.apiHandler.handleThing(thing=thing, display=0)
+                        print("Thing {} NOT THERE ANYMORE.".format(thing))
+                
             # Calculate FPS
             timeElapsedInMs = (time.time() - tFrameStart) * 1000
             currentFPS = 1000.0 / timeElapsedInMs

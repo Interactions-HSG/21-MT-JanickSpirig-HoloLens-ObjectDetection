@@ -3,7 +3,7 @@
 
 import tensorflow as tf
 import detector.core.common as common
-
+#import core.common as common
 def darknet53(input_data):
 
     input_data = common.convolutional(input_data, (3, 3,  3,  32))

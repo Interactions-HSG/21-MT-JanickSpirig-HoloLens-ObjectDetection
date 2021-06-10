@@ -4,7 +4,7 @@ import colorsys
 import numpy as np
 import tensorflow as tf
 from detector.core.config import cfg
-# from core.config import cfg
+#from core.config import cfg
 
 def load_freeze_layer(model='yolov4', tiny=False):
     if tiny:

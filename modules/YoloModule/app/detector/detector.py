@@ -24,6 +24,7 @@ class Detector:
             tiny=False,
             framework='tf',
             model='yolov4',
+            custom=False,
             iou=0.45,
             score=0.25
             ):
@@ -34,17 +35,22 @@ class Detector:
         self.input_size = 416
         self.framework = framework
         self.model = model
+        self.custom = custom
         self.tiny = tiny
         self.iou = iou
         self.score = score
         self.STRIDES, self.ANCHORS, self.NUM_CLASS, self.XYSCALE = utils.load_config(self.tiny, self.model)
 
-        if not self.tiny:
-            # self.weights = './checkpoints/yolov4-416'
-            self.weights = 'detector/checkpoints/yolov4-416'
-        else:
-            # self.weights = './checkpoints/yolov4-tiny-416'
-            self.weights = 'detector/checkpoints/yolov4-tiny-416'
+        print("Run tiny???")
+        print(self.tiny)
+
+        if not self.custom:
+            if self.tiny:
+                self.weights = 'detector/checkpoints/yolov4-tiny-416'
+            else:
+                self.weights = 'detector/checkpoints/yolov4-416'
+
+        self.weights = 'detector/checkpoints/custom-416'
         
         if self.framework == 'tflite':
             self.interpreter = tf.lite.Interpreter(model_path=self.weights)

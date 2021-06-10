@@ -13,23 +13,25 @@ import VideoCapture
 from VideoCapture import VideoCapture
 
 def main(
-        videoPath ="",
-        verbose = False,
-        videoWidth = 0,
-        videoHeight = 0,
-        fontScale = 1.0,
-        inference = True,
-        confidenceLevel = 0.7,
-        tiny=True,
-        show=False,
-        OUTPUT_PATH=""
+        videoPath,
+        verbose,
+        videoWidth,
+        videoHeight,
+        fontScale,
+        inference,
+        confidenceLevel,
+        custom,
+        tiny,
+        show,
+        output,
+        min_time
         ):
 
     global videoCapture
 
     try:
         print("\nPython %s\n" % sys.version )
-        print("Yolo Capture Azure IoT Edge Module. Press Ctrl-C to exit." )
+        print("Yolo Capture Module. Press Ctrl-C to exit." )
 
         with VideoCapture(videoPath,
                          verbose,
@@ -38,9 +40,11 @@ def main(
                          fontScale,
                          inference,
                          confidenceLevel,
+                         custom,
                          tiny,
                          show,
-                         OUTPUT_PATH
+                         output,
+                         min_time
                          ) as videoCapture:
                          
             videoCapture.start()
@@ -63,6 +67,8 @@ def Run():
         TINY = cfg['USE_YOLO-TINY']
         SHOW = cfg['SHOW_OUTPUT']
         OUTPUT_PATH = cfg['RESULT_PATH']
+        CUSTOM = cfg['CUSTOM']
+        MIN_TIME = cfg['MIN_TIME']
         
         # no idea why these parameters exist
         VERBOSE = False
@@ -74,7 +80,7 @@ def Run():
         print(error )
         sys.exit(1)
 
-    main(VIDEO_PATH, VERBOSE, VIDEO_WIDTH, VIDEO_HEIGHT, FONT_SCALE, INFERENCE, CONFIDENCE_LEVEL, TINY, SHOW, OUTPUT_PATH)
+    main(VIDEO_PATH, VERBOSE, VIDEO_WIDTH, VIDEO_HEIGHT, FONT_SCALE, INFERENCE, CONFIDENCE_LEVEL, CUSTOM, TINY, SHOW, OUTPUT_PATH, MIN_TIME)
 
 if __name__ == '__main__':
     Run()
