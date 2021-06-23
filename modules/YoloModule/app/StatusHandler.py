@@ -8,9 +8,10 @@ class StatusHandler:
         # here we track if objects are present in scene or not
 
         self.statuses = {
-            "Cherrybot": 1,
-            "Leubot": 1,
+            "Cherrybot": 0,
+            "Leubot": 0,
             "smart-bulb":0,
             "desk-lamp":0,
-            "person":0
+            "lab":0,
+            "office": 0
             }

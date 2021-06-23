@@ -209,7 +209,7 @@ class VideoCapture(object):
         # by default VideoCapture returns float instead of int
         if self.show_result: 
             codec = cv2.VideoWriter_fourcc(*"XVID")
-            out = cv2.VideoWriter(self.result_path, codec, 24, (frame_width, frame_height))
+            out = cv2.VideoWriter(self.result_path, codec, cameraFPS, (frame_width, frame_height))
 
         index_boundary = None
         detections_queue = []
@@ -298,13 +298,19 @@ class VideoCapture(object):
                             # when thing is not of interest to us
                             except KeyError:
                                 pass
-                            
+
+                # check for alerts by querying the ontology
+                # 1. query ontology
+                # 2. if alerts are present, then display accoring hologram on the hololenses -> this has to be sort of in front of the users face
+                # so that the user can ^ distinguish between the object hologram and the alert that he should investigate imediately
+
                 # build the new queue element
                 try:
                     if len(queue_list) > 0:
                         detections_queue.append(queue_list)
+                        queue_list = []
                     else:
-                        # confidence too low
+                        # confidence too low or no detections at all
                         detections_queue.append(["NaN"])
                 except NameError:
                     # no detections at all

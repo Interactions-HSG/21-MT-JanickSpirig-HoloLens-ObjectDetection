@@ -1,17 +1,17 @@
 # if we want to use our own custom model
-CUSTOM: False
+CUSTOM: True
 # if model is YOLO, delect if tiny version should be used which achieves around 30 frames per second on CPU
 USE_YOLO-TINY: False
 # the path to the HoloLens camera
-VIDEO_SOURCE: https://jspirig:janspi10@192.168.43.54/api/holographic/stream/live.mp4?olo=true&pv=true&mic=true&loopback=true
+VIDEO_SOURCE: https://jspirig:pwd@192.168.43.54/api/holographic/stream/live.mp4?olo=true&pv=true&mic=true&loopback=true
 # for testing it is maybe easier to use the webcam to detect some objects
-USE_WEBCAM: True
+USE_WEBCAM: False
 # if we want t©o do object recognition
 RUN_INFERENCE: True
 # the minimum confidence level to say it is a valid detection
 MIN_CONFIDENCE_LEVEL: 0.7
 # minimum time in sonds a thing must be in the screen so that we display any recommendations
-MIN_TIME: 1.5
+MIN_TIME: 1.0
 # if we want to show the output or not
 SHOW_OUTPUT: True
 # Path were the output video should be saved (as .avi)
