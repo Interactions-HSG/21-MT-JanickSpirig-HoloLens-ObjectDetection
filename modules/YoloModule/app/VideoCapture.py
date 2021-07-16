@@ -271,10 +271,15 @@ class VideoCapture(object):
                     for detection in detections:
                         classLabel, confidence = detection[0], detection[1]
                         if confidence > self.confidenceLevel:
+                            
+                            if "hue" in classLabel:
+                                classLabel = "hue"
+
                             queue_list.append(classLabel)
                             
                             print("Object: {}".format(classLabel))
                             print("Confidence: {}".format(confidence))
+
                             try:
                                 if self.apiHandler.statusHandler.statuses[classLabel] != 1:
 
@@ -338,6 +343,7 @@ class VideoCapture(object):
                         # don't show the thing anymore on the Hololens
                         self.apiHandler.handleThing(thing=thing, display=0)
                         print("Thing {} NOT THERE ANYMORE.".format(thing))
+                
                 
             # Calculate FPS
             timeElapsedInMs = (time.time() - tFrameStart) * 1000

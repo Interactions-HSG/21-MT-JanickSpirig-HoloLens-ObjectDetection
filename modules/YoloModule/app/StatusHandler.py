@@ -3,8 +3,9 @@
 
 class StatusHandler:
     def __init__(self):
-        # here let's save all the actions that we have
-
+        # the current location of the user
+        self.lab_detected = False
+        self.office_detected = False
         # here we track if objects are present in scene or not
 
         self.statuses = {
@@ -13,5 +14,9 @@ class StatusHandler:
             "smart-bulb":0,
             "desk-lamp":0,
             "lab":0,
-            "office": 0
+            "office": 0,
+            "smartcard":0,
+            "window":0,
+            "ceiling-light":0,
+            "hue":0
             }
