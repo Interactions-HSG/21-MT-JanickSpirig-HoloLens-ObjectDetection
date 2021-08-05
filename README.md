@@ -31,12 +31,16 @@ python save_model.py --weights ./data/yolov4-tiny.weights --output ./checkpoints
 # custom
 python save_model.py --weights ./data/custom.weights --output ./checkpoints/custom-416 --input_size 416 --model yolov4 
 ```
-
 #### 4 Setup conifg.yml
 Define the options in the file `config.yml` according to your needs.  
-- Set `CUSTOM` to `TRUE` if you have set up YOLOv4 for custom classes
-- Set `USE_YOLO-TINY`to `TRUE` if you use tiny weights
-- For `VIDEO_SOURCE` copy the path below and replace __DEVICE-PORTAL-USER__, __DEVICE-PORTAL-PWD__ and __HOLOLENS-IP__. The user and pwd are the ones you have defined when setting up the device portal. To come up with the IP address of the Hololens follow [this guide](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/platform-capabilities-and-apis/using-the-windows-device-portal#connecting-over-wi-fi).
-```
-https://<DEVICE-PORTAL-USER>:<DEVICE-PORTAL-PWD>@<HOLOLENS-IP>/api/holographic/stream/live.mp4?olo=true&pv=true&mic=true&loopback=true
-```
+- `CUSTOM` defines wehter YOLOv4 has been trained for custom classes. Set to `TRUE` if you have set up YOLOv4 for custom classes.
+- `USE_YOLO-TINY` defines whether the yolo wieghts are tiny or normal ones. Set to `TRUE` if you are using tiny wieghts.
+- `VIDEO_SOURCE` defines the URL under which the Hololens camera stream is accessible. Copy the path below and replace __DEVICE-PORTAL-USER__, __DEVICE-PORTAL-PWD__ and __HOLOLENS-IP__. The user and pwd are the ones you have defined when setting up the device portal. To come up with the IP address of the Hololens follow [this guide](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/platform-capabilities-and-apis/using-the-windows-device-portal#connecting-over-wi-fi).
+`https://<DEVICE-PORTAL-USER>:<DEVICE-PORTAL-PWD>@<HOLOLENS-IP>/api/holographic/stream/live.mp4?olo=true&pv=true&mic=true&loopback=true`
+- `USE_WEBCAM` defines whether the camera stream of the Webcam should be used. Set to `TRUE` if you want to run object recognition on your webcam's stream (e.g. to see if YOLOv4 works)
+- `MIN_CONFIDENCE_LEVEL` defines the minimum confidence for YOLOv4 in order to label an object with a class name. Set to your desired confidence level (e.g. `0.7`)
+- `MIN_TIME` defines the minimum time in seconds that an object must be present in the camera view before the information is sent to the Hololens that a certain object is present. This can be useful to sitinguish between the user just walking around in a room and looking at things randomly and the user looking at a thing on purpose. Set this for example to `1.5`.
+- `SHOW_OUTPUT` defines whether an output video should be produced under `RESULT_PATH` which contains rectangle boxes and class labels. Set to `True` if you want to double-check the YOLOv4 detections
+- `RESULT_PATH` defines the path unser which the result video will be saved (if `SHOW_OUTPUT` is set to `True`
+- `HOLO_ENDPOINT` defines wehter and information should be sent to the Hololens everytime a object appears in the user's view. Set to `True`if you have set up an endpoint on your Hololens that is able to receive incoming requests.
+- `HOLO_ENDPOINT_URL` defines the URL and Port of the endpoint (e.g. http://10.2.1.233:5050).
