@@ -36,7 +36,7 @@ python save_model.py --weights ./data/custom.weights --output ./checkpoints/cust
 Define the options in the file `config.yml` according to your needs.  
 - Set `CUSTOM` to `TRUE` if you have set up YOLOv4 for custom classes
 - Set `USE_YOLO-TINY`to `TRUE` if you use tiny weights
-- For `VIDEO_SOURCE` copy the path below and replace __DEVICE-PORTAL-USER__, __DEVICE-PORTAL-PWD__ AND __HOLOLENS-IP__. The user and pwd are the ones you have defined when setting up the device portal. To come up with the IP address of the Hololens follow [this guide](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/platform-capabilities-and-apis/using-the-windows-device-portal#connecting-over-wi-fi).
+- For `VIDEO_SOURCE` copy the path below and replace __DEVICE-PORTAL-USER__, __DEVICE-PORTAL-PWD__ and __HOLOLENS-IP__. The user and pwd are the ones you have defined when setting up the device portal. To come up with the IP address of the Hololens follow [this guide](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/platform-capabilities-and-apis/using-the-windows-device-portal#connecting-over-wi-fi).
 ```
 https://<DEVICE-PORTAL-USER>:<DEVICE-PORTAL-PWD>@<HOLOLENS-IP>/api/holographic/stream/live.mp4?olo=true&pv=true&mic=true&loopback=true
 ```
