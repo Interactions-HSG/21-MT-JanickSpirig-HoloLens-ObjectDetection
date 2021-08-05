@@ -6,12 +6,12 @@ The code is largely a combination of two repositories.
 
 ## Geeting Started
 
-#### 1 Device Portal Credentials
+### 1 Device Portal Credentials
 Configure the Hololens Device Portal as explained in [this guide](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/platform-capabilities-and-apis/using-the-windows-device-portal). Save and remember your user credentials that you defined in [this step](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/platform-capabilities-and-apis/using-the-windows-device-portal#creating-a-username-and-password).
 
-#### 2 Clone repository
+### 2 Clone repository
 
-#### 3 Setup YOLOv4
+### 3 Setup YOLOv4
 - Open a terminal window and cd to modules\YoloModule\app\detector
 - Create your conda environment (either CPU or GPU) as explained [here](https://github.com/theAIGuysCode/tensorflow-yolov4-tflite#conda-recommended).  
 Download the pre-traiend COCO weights ([yolov4.weights](https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT), [yolov4-tiny.weights](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights)) __OR__ train yolo for your custom classes by following the steps in [this video](https://www.youtube.com/watch?v=mmj3nxGT2YQ) 
@@ -31,7 +31,7 @@ python save_model.py --weights ./data/yolov4-tiny.weights --output ./checkpoints
 # custom
 python save_model.py --weights ./data/custom.weights --output ./checkpoints/custom-416 --input_size 416 --model yolov4 
 ```
-#### 4 Setup conifg.yml
+### 4 Setup conifg.yml
 Define the options in the file `config.yml` according to your needs.  
 - `CUSTOM` defines wehter YOLOv4 has been trained for custom classes. Set to `TRUE` if you have set up YOLOv4 for custom classes.
 - `USE_YOLO-TINY` defines whether the yolo wieghts are tiny or normal ones. Set to `TRUE` if you are using tiny wieghts.
