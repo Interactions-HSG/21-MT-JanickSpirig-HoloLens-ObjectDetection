@@ -6,9 +6,11 @@ The code is largely a combination of two repositories.
 
 ## Geeting Started
 
-### Device Portal Credentials
+#### (1) Device Portal Credentials
 Configure the Hololens Device Portal as explained in [this guide](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/platform-capabilities-and-apis/using-the-windows-device-portal). Save and remember your user credentials that you defined in [this step](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/platform-capabilities-and-apis/using-the-windows-device-portal#creating-a-username-and-password).
 
-### 
+#### (2) Clone repository
+
+###
 
 
