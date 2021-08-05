@@ -20,7 +20,7 @@ Download the pre-traiend COCO weights ([yolov4.weights](https://drive.google.com
 
 <img width="541" alt="Screenshot 2021-08-05 at 17 05 09" src="https://user-images.githubusercontent.com/43849960/128373749-93844a5c-46dd-4f6c-90e9-1e20fde31e86.png">
   
-- Convert the yolo weights from darkent to TensorFlow format by executing one of the commands below in the terminal (cd to folder detector).  
+- Convert the yolo weights from darkent to TensorFlow format by executing one of the commands below in the terminal (cd to folder detector)
 ```
 # pretrained
 python save_model.py --weights ./data/yolov4.weights --output ./checkpoints/yolov4-416 --input_size 416 --model yolov4 
@@ -30,3 +30,13 @@ python save_model.py --weights ./data/yolov4-tiny.weights --output ./checkpoints
 
 # custom
 python save_model.py --weights ./data/custom.weights --output ./checkpoints/custom-416 --input_size 416 --model yolov4 
+```
+
+#### 4 Setup conifg.yml
+Define the options in the file `config.yml` according to your needs.  
+- Set `CUSTOM` to `TRUE` if you have set up YOLOv4 for custom classes
+- Set `USE_YOLO-TINY`to `TRUE` if you use tiny weights
+- For `VIDEO_SOURCE` copy the path below and replace __DEVICE-PORTAL-USER__, __DEVICE-PORTAL-PWD__ AND __HOLOLENS-IP__. The user and pwd are the ones you have defined when setting up the device portal. To come up with the IP address of the Hololens follow this guide.
+```
+https://<<DEVICE-PORTAL-USER>>:<<DEVICE-PORTAL-PWD>>@<<HOLOLENS-IP>>/api/holographic/stream/live.mp4?olo=true&pv=true&mic=true&loopback=true
+```
