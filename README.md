@@ -15,8 +15,18 @@ Configure the Hololens Device Portal as explained in [this guide](https://docs.m
 Open a terminal window and `cd` to `modules\YoloModule\app\detector`.  
 Create your conda environment (either CPU or GPU) as explained [here](https://github.com/theAIGuysCode/tensorflow-yolov4-tflite#conda-recommended).  
 Download the pre-traiend COCO weights ([yolov4.weights](https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT), [yolov4-tiny.weights](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights)) __OR__ train yolo for your custom classes by following the steps in [this video](https://www.youtube.com/watch?v=mmj3nxGT2YQ).  
-Move the according `.weights` file (pretrained or custom) into the folder `detector\data`.  
+Move the according `.weights` file (pretrained or custom) into the folder `detector\data`. If you use custom wieights, make sure that the file is named as `custom.weights?`.  
 If you use custom weights, comment out line 15 in file `detector\core\config.py` and comment line 14. It should look like that:  
 
 <img width="541" alt="Screenshot 2021-08-05 at 17 05 09" src="https://user-images.githubusercontent.com/43849960/128373749-93844a5c-46dd-4f6c-90e9-1e20fde31e86.png">
+  
+Convert the yolo weights from darkent to TensorFlow format by executing one of the commands below in the terminal (`cd` to folder `detector`).  
+```
+# pretrained
+python save_model.py --weights ./data/yolov4.weights --output ./checkpoints/yolov4-416 --input_size 416 --model yolov4 
 
+# pretrained tiny
+python save_model.py --weights ./data/yolov4-tiny.weights --output ./checkpoints/yolov4-tiny-416 --input_size 416 --model yolov4 --tiny
+
+# custom
+python save_model.py --weights ./data/custom.weights --output ./checkpoints/custom-416 --input_size 416 --model yolov4 
