@@ -12,9 +12,10 @@ Configure the Hololens Device Portal as explained in [this guide](https://docs.m
 #### 2 Clone repository
 
 #### 3 Setup YOLOv4
-Open a terminal window and `cd` to `modules\YoloModule\app\detector`. Create your conda environment (either CPU or GPU) as explained [here](https://github.com/theAIGuysCode/tensorflow-yolov4-tflite#conda-recommended).
-Execute all following steps.
-Download the pre-traiend COCO weights ([yolov4.weights](https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT), [yolov4-tiny.weights](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights) or train yolo for your custom classes by following the steps in [this video](https://www.youtube.com/watch?v=mmj3nxGT2YQ). Move the according `.weigts`file (pretrained or custom) into the folder `detector\data`.
+Open a terminal window and `cd` to `modules\YoloModule\app\detector`.
+Create your conda environment (either CPU or GPU) as explained [here](https://github.com/theAIGuysCode/tensorflow-yolov4-tflite#conda-recommended).
+Download the pre-traiend COCO weights ([yolov4.weights](https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT), [yolov4-tiny.weights](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights) OR train yolo for your custom classes by following the steps in [this video](https://www.youtube.com/watch?v=mmj3nxGT2YQ).
+Move the according `.weigts`file (pretrained or custom) into the folder `detector\data`.
 If you use custom weights, comment out line 15 in file `detector\core\config.py` and comment line 14. It should look like that:
 
 <img width="541" alt="Screenshot 2021-08-05 at 17 05 09" src="https://user-images.githubusercontent.com/43849960/128373749-93844a5c-46dd-4f6c-90e9-1e20fde31e86.png">
