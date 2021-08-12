@@ -6,5 +6,6 @@
 .vscode/
 .DS_Store
 **.DS_Store
+**/.DS_Store
 **.yml
 **/__pycache__/
