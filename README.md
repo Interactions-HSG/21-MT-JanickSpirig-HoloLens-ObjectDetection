@@ -48,7 +48,7 @@ Define the options in the file `config.yml` according to your needs.
 
 
 ### 5 Run the detection!
-Now you are all set and ready to run YOLOv4 object detection on the Microsoft Hololens PV camera. Execute following steps in the exact same order to start the application.
+Now you are all set and ready to run YOLOv4 object detection on the Microsoft Hololens PV camera. Execute following steps to start the detection.
 1. Start up the Hololens and log in. Make sure it is charged sufficiently as the PV camera has heavy battery usage.
 2. Activate the conda environment. Open a terminal and execute `conda activate yolov4-cpu` for CPU or `conda activate yolov4-gpu` for GPU.
 3. `cd` to */modules/YoloModule/app/*
