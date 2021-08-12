@@ -45,3 +45,11 @@ Define the options in the file `config.yml` according to your needs.
 - `RESULT_PATH` defines the path unser which the result video will be saved (if `SHOW_OUTPUT` is set to `True`
 - `HOLO_ENDPOINT` defines wehter and information should be sent to a Hololens or any arbitrary endpoint everytime an object appears in the user's view. Set to `True` if you have set up an endpoint on your Hololens that is able to receive incoming requests. [This example](https://github.com/janick187/Hololens-frontend/blob/master/Assets/Scripts/HTTPListener.cs) shows you how such an endpoint can be setup within a Unity application.
 - `HOLO_ENDPOINT_URL` defines the URL and Port of the endpoint (e.g. http://10.2.1.233:5050) to which an HTTP Get request will be sent to whenever a new object has been detected (`http://{HOLO_ENDPOINT_URL}/?{class_label}=1`). Remember to define the port in the URL if necessary.
+
+
+### 5 Run the detection!
+Now you are all set and ready to run YOLOv4 object detection on the Microsoft Hololens PV camera. Execute following steps in the exact same order to start the application.
+1. Start up the Hololens and log in. Make sure it is charged sufficiently as the PV camera has heavy battery usage.
+2. Activate the conda environment. Open a terminal and execute `conda activate yolov4-cpu` for CPU or `conda activate yolov4-gpu` for GPU.
+3. `cd` to */modules/YoloModule/app/*
+4. Run `python main.py`
