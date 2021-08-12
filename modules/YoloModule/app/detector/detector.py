@@ -41,16 +41,16 @@ class Detector:
         self.score = score
         self.STRIDES, self.ANCHORS, self.NUM_CLASS, self.XYSCALE = utils.load_config(self.tiny, self.model)
 
-        print("Run tiny???")
-        print(self.tiny)
-
         if not self.custom:
             if self.tiny:
                 self.weights = 'detector/checkpoints/yolov4-tiny-416'
             else:
                 self.weights = 'detector/checkpoints/yolov4-416'
-
-        self.weights = 'detector/checkpoints/custom-416'
+        else:
+            if self.tiny:
+                self.weights = 'detector/checkpoints/custom-tiny-416'
+            else:
+                self.weights = 'detector/checkpoints/custom-416'
         
         if self.framework == 'tflite':
             self.interpreter = tf.lite.Interpreter(model_path=self.weights)

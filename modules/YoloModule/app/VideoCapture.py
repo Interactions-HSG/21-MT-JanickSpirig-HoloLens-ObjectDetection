@@ -27,23 +27,19 @@ class VideoCapture(object):
     def __init__(
             self,
             videoPath,
-            verbose,
-            videoW,
-            videoH,
-            fontScale,
             inference,
             confidenceLevel,
             custom,
+            custom_classes,
             tiny,
             show,
             result_path,
-            min_time
+            min_time,
+            holo_endpoint,
+            holo_url
             ):
 
         self.videoPath = videoPath
-        self.verbose = verbose
-        self.videoW = videoW
-        self.videoH = videoH
         self.inference = inference
         self.confidenceLevel = confidenceLevel
         self.useStream = False
@@ -53,28 +49,36 @@ class VideoCapture(object):
         self.vStream = None
         self.vCapture = None
         self.displayFrame = None
-        self.fontScale = float(fontScale)
         self.captureInProgress = False
         self.custom = custom
+        self.custom_classes = custom_classes
         self.tiny = tiny
         self.show_result = show
         self.result_path = result_path
         self.recommendation_thresh = min_time
+        self.holo_endpoint = holo_endpoint
 
         print("VideoCapture::__init__()")
         print("OpenCV Version : %s" % (cv2.__version__))
         print("===============================================================")
         print("Initialising Video Capture with the following parameters: ")
-        print("   - Video path      : " + str(self.videoPath))
-        print("   - Video width     : " + str(self.videoW))
-        print("   - Video height    : " + str(self.videoH))
-        print("   - Font Scale      : " + str(self.fontScale))
-        print("   - Inference?      : " + str(self.inference))
-        print("   - ConficenceLevel : " + str(self.confidenceLevel))
+        print("   - Video path       : " + str(self.videoPath))
+        print("   - Inference?       : " + str(self.inference))
+        print("   - ConficenceLevel  : " + str(self.confidenceLevel))
+        print("   - CustomDetection? : " + str(self.custom))
+        if self.custom:
+            print("   - Custom Classes   : " + str(self.custom_classes))
+        print("   - HololensEndpoint?: " + str(self.holo_endpoint))
+        if self.holo_endpoint:
+            print("   - HololensUrl      : " + str(holo_url))
         print("")
 
         self.yoloInference = Detector(tiny=self.tiny, custom=self.custom) # yolov4
-        self.apiHandler = APIHandler()
+
+        if self.custom:
+            self.apiHandler = APIHandler(holo_url, self.custom_classes)
+        else:
+            self.apiHandler =APIHandler(holo_url)
 
     def __IsCaptureDev(self, videoPath):
         try: 
@@ -90,9 +94,6 @@ class VideoCapture(object):
             return False
 
     def __enter__(self):
-
-        if self.verbose:
-            print("videoCapture::__enter__()")
 
         self.setVideoSource(self.videoPath)
 
@@ -216,10 +217,6 @@ class VideoCapture(object):
         last_fps = 0
 
         while True:
-
-            # timestamps = [cap.get(cv2.CAP_PROP_POS_MSEC)]
-            # calc_timestamps = [0.0]
-
             tFrameStart = time.time()
 
             if not self.captureInProgress:
@@ -227,14 +224,10 @@ class VideoCapture(object):
             try:
                 if self.useStream:
                     frame = self.vStream.read()
-                    # add timestamp of frame
-                    # timestamps.append(cap.get(cv2.CAP_PROP_POS_MSEC))
-                    # calc_timestamps.append(calc_timestamps[-1] + 1000/fps)
+                    
                 else:
                     frame = self.vCapture.read()[1]
-                    # add timestamp of frame
-                    # timestamps.append(cap.get(cv2.CAP_PROP_POS_MSEC))
-                    # calc_timestamps.append(calc_timestamps[-1] + 1000/fps)
+                    
             except Exception as e:
                 print("ERROR : Exception during capturing")
                 raise(e)
@@ -257,13 +250,6 @@ class VideoCapture(object):
                     result = np.asarray(image)
                     result = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
                     out.write(result)
-                '''
-                if self.show:
-                    # cv2.imshow("result", result)
-                    cv2.imshow('result' , result)
-
-                if cv2.waitKey(1) & 0xFF == ord('q'): break
-                '''
                 
                 # handle Object presence
                 if len(detections) > 0:
@@ -280,34 +266,30 @@ class VideoCapture(object):
                             print("Object: {}".format(classLabel))
                             print("Confidence: {}".format(confidence))
 
-                            try:
-                                if self.apiHandler.statusHandler.statuses[classLabel] != 1:
+                            if self.holo_endpoint:
+                                try:
+                                    if self.apiHandler.statusHandler.statuses[classLabel] != 1:
 
-                                    ThingIsThere = True
-                                    
-                                    if len(detections_queue) >= index_boundary:  
-                                        for i in detections_queue:
-                                            # check if thing has been detected x seconds ago
-                                            # print(i)
-                                            if any(classLabel in sl for sl in i):
-                                                continue
-                                            else:
-                                                ThingIsThere = False
-                                                break 
-                                    else:
-                                        ThingIsThere = False
-                                    
-                                    if ThingIsThere:
-                                        print("Thing is there")
-                                        self.apiHandler.handleThing(thing=classLabel, display=1) # send call to display all actions on the Hololens that are related with this object
-                            # when thing is not of interest to us
-                            except KeyError:
-                                pass
-
-                # check for alerts by querying the ontology
-                # 1. query ontology
-                # 2. if alerts are present, then display accoring hologram on the hololenses -> this has to be sort of in front of the users face
-                # so that the user can ^ distinguish between the object hologram and the alert that he should investigate imediately
+                                        ThingIsThere = True
+                                        
+                                        if len(detections_queue) >= index_boundary:  
+                                            for i in detections_queue:
+                                                # check if thing has been detected x seconds ago
+                                                # print(i)
+                                                if any(classLabel in sl for sl in i):
+                                                    continue
+                                                else:
+                                                    ThingIsThere = False
+                                                    break 
+                                        else:
+                                            ThingIsThere = False
+                                        
+                                        if ThingIsThere:
+                                            print("Thing is there")
+                                            self.apiHandler.handleThing(thing=classLabel, display=1) # send call to display all actions on the Hololens that are related with this object
+                                # when thing is not of interest to us
+                                except KeyError:
+                                    pass
 
                 # build the new queue element
                 try:
@@ -340,10 +322,9 @@ class VideoCapture(object):
                             break
                     
                     if not ThingIsThere:
-                        # don't show the thing anymore on the Hololens
+                        
                         self.apiHandler.handleThing(thing=thing, display=0)
-                        print("Thing {} NOT THERE ANYMORE.".format(thing))
-                
+                        print("Thing {} is not present anymore.".format(thing))
                 
             # Calculate FPS
             timeElapsedInMs = (time.time() - tFrameStart) * 1000
@@ -358,8 +339,6 @@ class VideoCapture(object):
             if (1000 / cameraFPS) > timeElapsedInMs:
                 # This is faster than image source (e.g. camera) can feed.  
                 waitTimeBetweenFrames = perFrameTimeInMs - timeElapsedInMs
-                #if self.verbose:
-                    #print("  Wait time between frames :" + str(int(waitTimeBetweenFrames)))
                 time.sleep(waitTimeBetweenFrames/1000.0)
 
     def __exit__(self, exception_type, exception_value, traceback):

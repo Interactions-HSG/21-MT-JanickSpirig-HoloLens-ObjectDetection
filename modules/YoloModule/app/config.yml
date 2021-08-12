@@ -1,18 +1,41 @@
+---
 # if we want to use our own custom model
-CUSTOM: True
+CUSTOM: False
 # if model is YOLO, delect if tiny version should be used which achieves around 30 frames per second on CPU
+CUSTOM_CLASSES:
+  - Cherrybot
+  - Leubot
+  - desk-lamp
+  - desk-bulb
+  - lab
+  - office
+  - ceiling-light
+  - office-light
+  - hue-green
+  - hue-yellow
+  - hue-red
+  - hue-purple
+  - window
+  - smartcard
+
 USE_YOLO-TINY: False
 # the path to the HoloLens camera
-VIDEO_SOURCE: https://jspirig:pwd@192.168.43.54/api/holographic/stream/live.mp4?olo=true&pv=true&mic=true&loopback=true
+#VIDEO_SOURCE: https://@10.2.1.85/api/holographic/stream/live.mp4?olo=true&pv=true&mic=true&loopback=true # LABNET LAB
+VIDEO_SOURCE: https://@10.2.1.233/api/holographic/stream/live.mp4?olo=true&pv=true&mic=true&loopback=true # LABNET OFFICE
 # for testing it is maybe easier to use the webcam to detect some objects
-USE_WEBCAM: False
-# if we want t©o do object recognition
+USE_WEBCAM: True
+# if we want to do object recognition
 RUN_INFERENCE: True
 # the minimum confidence level to say it is a valid detection
 MIN_CONFIDENCE_LEVEL: 0.7
-# minimum time in sonds a thing must be in the screen so that we display any recommendations
+# minimum time in seconds a thing must be in the screen so that we display any recommendations
 MIN_TIME: 1.0
-# if we want to show the output or not
+# if we want to record the detections in a video by drawing rectangle boxes and assigning confidence values
 SHOW_OUTPUT: True
 # Path were the output video should be saved (as .avi)
-RESULT_PATH: "/Users/janickspirig/Desktop/results.avi"
+RESULT_PATH: /Users/janickspirig/Desktop/results.avi
+# if HTTP request should be sent to an endpoint (usally a Microsoft Hololens) everytime a new object appears in the users field of view
+HOLO_ENDPOINT: True
+# the endpoint of the Microsoft Hololens or any other endpoint
+HOLO_ENDPOINT_URL: http://10.2.1.233:5050 # office
+#HOLO_ENDPOINT_URL: http://10.2.1.85:5050 # lab

@@ -14,17 +14,16 @@ from VideoCapture import VideoCapture
 
 def main(
         videoPath,
-        verbose,
-        videoWidth,
-        videoHeight,
-        fontScale,
         inference,
         confidenceLevel,
         custom,
+        custom_classes,
         tiny,
         show,
         output,
-        min_time
+        min_time,
+        holo_endpoint,
+        holo_url
         ):
 
     global videoCapture
@@ -34,17 +33,16 @@ def main(
         print("Yolo Capture Module. Press Ctrl-C to exit." )
 
         with VideoCapture(videoPath,
-                         verbose,
-                         videoWidth,
-                         videoHeight,
-                         fontScale,
                          inference,
                          confidenceLevel,
                          custom,
+                         custom_classes,
                          tiny,
                          show,
                          output,
-                         min_time
+                         min_time,
+                         holo_endpoint,
+                         holo_url
                          ) as videoCapture:
                          
             videoCapture.start()
@@ -62,25 +60,23 @@ def Run():
         else:
             VIDEO_PATH = cfg['VIDEO_SOURCE']
         
-        INFERENCE = cfg['RUN_INFERENCE']
-        CONFIDENCE_LEVEL = cfg['MIN_CONFIDENCE_LEVEL']
-        TINY = cfg['USE_YOLO-TINY']
-        SHOW = cfg['SHOW_OUTPUT']
-        OUTPUT_PATH = cfg['RESULT_PATH']
-        CUSTOM = cfg['CUSTOM']
-        MIN_TIME = cfg['MIN_TIME']
-        
-        # no idea why these parameters exist
-        VERBOSE = False
-        VIDEO_WIDTH = 0
-        VIDEO_HEIGHT = 0
-        FONT_SCALE = 1
-        
     except ValueError as error:
         print(error )
         sys.exit(1)
 
-    main(VIDEO_PATH, VERBOSE, VIDEO_WIDTH, VIDEO_HEIGHT, FONT_SCALE, INFERENCE, CONFIDENCE_LEVEL, CUSTOM, TINY, SHOW, OUTPUT_PATH, MIN_TIME)
+    main(
+        VIDEO_PATH,
+        cfg['RUN_INFERENCE'],
+        cfg['MIN_CONFIDENCE_LEVEL'],
+        cfg['CUSTOM'],
+        cfg['CUSTOM_CLASSES'],
+        cfg['USE_YOLO-TINY'],
+        cfg['SHOW_OUTPUT'],
+        cfg['RESULT_PATH'],
+        cfg['MIN_TIME'],
+        cfg['HOLO_ENDPOINT'],
+        cfg['HOLO_ENDPOINT_URL']
+        )
 
 if __name__ == '__main__':
     Run()
