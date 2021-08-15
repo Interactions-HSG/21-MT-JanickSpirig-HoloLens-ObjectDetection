@@ -13,7 +13,7 @@ The code is largely a combination of two repositories.
 
 ### 3 Setup YOLOv4
 - Open a terminal window and cd to modules\YoloModule\app\detector
-- Create and activate your conda environment by first downloading anaconda and then executing one of the commands below in terminal (either CPU or GPU)
+- Create and activate your conda environment by first [downloading anaconda](https://docs.anaconda.com/anaconda/install/index.html) and then executing one of the commands below in terminal (either CPU or GPU)
 
 ```
 cd modules/YoloModule/app/detector/
