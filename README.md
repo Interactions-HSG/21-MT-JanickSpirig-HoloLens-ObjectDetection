@@ -27,7 +27,6 @@ conda env create -f conda-gpu.yml
 conda activate yolov4-gpu
 ```
 
-
 - Download the pre-traiend [coco weights](https://cocodataset.org/#home) ([yolov4.weights](https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT), [yolov4-tiny.weights](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights)) __OR__ train yolo for your custom classes by following the steps in [this video](https://www.youtube.com/watch?v=mmj3nxGT2YQ) 
 - Move the according `.weights` file (pretrained or custom) into the folder detector\data. If you use custom wieights, make sure that the file is named as `custom.weights`
 - If you use custom weights, place your custom `.names` file (e.g. `obj.names`) into folder detector\data and comment out line 18 in file detector\core\config.py and comment line 15. It should look like in the screenshot below. Remember that anytime you switch between custom wnd pretrained coco weights (pre-trained) you have to adjust these two lines of code.
@@ -39,13 +38,13 @@ conda activate yolov4-gpu
 cd modules/YoloModule/app
 
 # pretrained
-python save_model.py --weights ./data/yolov4.weights --output ./checkpoints/yolov4-416 --input_size 416 --model yolov4 
+python save_model.py --weights detector/data/yolov4.weights --output detector/checkpoints/yolov4-416 --input_size 416 --model yolov4 
 
 # pretrained tiny
-python save_model.py --weights ./data/yolov4-tiny.weights --output ./checkpoints/yolov4-tiny-416 --input_size 416 --model yolov4 --tiny
+python save_model.py --weights detector/data/yolov4-tiny.weights --output detector/checkpoints/yolov4-tiny-416 --input_size 416 --model yolov4 --tiny
 
 # custom
-python save_model.py --weights ./data/custom.weights --output ./checkpoints/custom-416 --input_size 416 --model yolov4 
+python save_model.py --weights detector/data/custom.weights --output detector/checkpoints/custom-416 --input_size 416 --model yolov4 
 ```
 ### 4 Setup conifg.yml
 Define the options in the file `config.yml` according to your needs.  
