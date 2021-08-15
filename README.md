@@ -18,8 +18,8 @@ The code is largely a combination of two repositories.
 - Move the according `.weights` file (pretrained or custom) into the folder detector\data. If you use custom wieights, make sure that the file is named as `custom.weights`
 - If you use custom weights, place your custom `.names` file (e.g. `obj.names`) into folder detector\data and comment out line 15 in file detector\core\config.py and comment line 14. It should look like in the screenshot below. Remember that anytime you switch between custom wnd pretrained COCO weights you have to adjust these two lines of code.
 
-<img width="541" alt="Screenshot 2021-08-05 at 17 05 09" src="https://user-images.githubusercontent.com/43849960/128373749-93844a5c-46dd-4f6c-90e9-1e20fde31e86.png">
-  
+<img width="541" alt="Screenshot 2021-08-15 at 15 04 22" src="https://user-images.githubusercontent.com/43849960/129479546-edf3ba64-9743-4e59-96b2-e42444e83af5.png">
+
 - Convert the yolo weights from darkent to TensorFlow format by executing one of the commands below in the terminal (cd to folder detector)
 ```
 # pretrained
