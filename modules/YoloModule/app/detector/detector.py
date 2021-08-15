@@ -8,16 +8,17 @@ from absl import app, flags, logging
 from absl.flags import FLAGS
 
 import detector.core.utils as utils
+
 from detector.core.yolov4 import filter_boxes
+
 from tensorflow.python.saved_model import tag_constants
 from PIL import Image
 import cv2
 import numpy as np
 from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
+
 from detector.core.config import cfg
-
-
 
 class Detector:
     def __init__(self,

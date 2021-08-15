@@ -1,9 +1,11 @@
 import tensorflow as tf
 from absl import app, flags, logging
 from absl.flags import FLAGS
-from core.yolov4 import YOLO, decode, filter_boxes
-import core.utils as utils
-from core.config import cfg
+
+
+from detector.core.yolov4 import YOLO, decode, filter_boxes
+import detector.core.utils as utils
+from detector.core.config import cfg
 
 flags.DEFINE_string('weights', './data/yolov4.weights', 'path to weights file')
 flags.DEFINE_string('output', './checkpoints/yolov4-416', 'path to output')
@@ -14,7 +16,7 @@ flags.DEFINE_string('framework', 'tf', 'define what framework do you want to con
 flags.DEFINE_string('model', 'yolov4', 'yolov3 or yolov4')
 
 def save_tf():
-  STRIDES, ANCHORS, NUM_CLASS, XYSCALE = utils.load_config(FLAGS)
+  STRIDES, ANCHORS, NUM_CLASS, XYSCALE = utils.load_config(FLAGS.tiny, FLAGS.model)
 
   input_layer = tf.keras.layers.Input([FLAGS.input_size, FLAGS.input_size, 3])
   feature_maps = YOLO(input_layer, NUM_CLASS, FLAGS.model, FLAGS.tiny)

@@ -3,14 +3,12 @@
 
 import numpy as np
 import tensorflow as tf
+
 import detector.core.utils as utils
 import detector.core.common as common
 import detector.core.backbone as backbone
 from detector.core.config import cfg
-#import core.utils as utils
-#import core.common as common
-#import core.backbone as backbone
-#from core.config import cfg
+
 
 # NUM_CLASS       = len(utils.read_class_names(cfg.YOLO.CLASSES))
 # STRIDES         = np.array(cfg.YOLO.STRIDES)

@@ -181,11 +181,13 @@ class VideoCapture(object):
         print("   - useMovieFile    : " + str(self.useMovieFile))
         print("   - useWebcam       : " + str(self.useWebcam))
 
+        '''
         # check if stream is opened
         if self.useStream:
-            print("stream is opnened {}".format(self.vStream.stream.isOpened()))
+            print("Stream is opnened {}".format(self.vStream.stream.isOpened()))
         elif self.useWebcam:
-            print("stream is opnened {}".format(self.vCapture.isOpened()))
+            print("Stream is opnened {}".format(self.vCapture.isOpened()))
+        '''
 
         # Check camera's FPS
         if self.useStream:
