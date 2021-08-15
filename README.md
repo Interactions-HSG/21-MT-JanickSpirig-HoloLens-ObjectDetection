@@ -6,12 +6,12 @@ The code is largely a combination of two repositories.
 
 ## Geeting Started
 
-### Device Portal Credentials
+### [1] Device Portal Credentials
 [Configure](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/platform-capabilities-and-apis/using-the-windows-device-portal) the Hololens Device Portal as explained. Save and remember [your user credentials](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/platform-capabilities-and-apis/using-the-windows-device-portal#creating-a-username-and-password).
 
-### Clone repository
+### [2] Clone repository
 
-### Setup YOLOv4
+### [3] Setup YOLOv4
 - Open a terminal window and cd to modules\YoloModule\app\detector
 - Create and activate your conda environment by first [downloading anaconda](https://docs.anaconda.com/anaconda/install/index.html) and then executing one of the commands below in terminal (either CPU or GPU)
 
@@ -46,7 +46,7 @@ python save_model.py --weights detector/data/yolov4-tiny.weights --output detect
 # custom
 python save_model.py --weights detector/data/custom.weights --output detector/checkpoints/custom-416 --input_size 416 --model yolov4 
 ```
-### Setup conifg.yml
+### [4] Setup conifg.yml
 Define the options in the file `config.yml` according to your needs.  
 
 | Parameter  | Details |
@@ -64,7 +64,7 @@ Define the options in the file `config.yml` according to your needs.
 |`HOLO_ENDPOINT_URL`  | Defines the URL and Port of the endpoint (e.g. http://10.2.1.233:5050) to which an HTTP Get request will be sent to whenever a new object has been detected (`http://{HOLO_ENDPOINT_URL}/?{class_label}=1`). Remember to define the port in the URL if necessary |
 
 
-### Run the detection
+### [5] Run the detection
 Now you are all set and ready to run YOLOv4 object detection on the Microsoft Hololens PV camera. Execute following steps to start the detection.
 1. Start up the Hololens and log in. Make sure it is charged sufficiently as the PV camera has heavy battery usage.
 2. Activate the conda environment. Open a terminal and execute `conda activate yolov4-cpu` for CPU or `conda activate yolov4-gpu` for GPU.
