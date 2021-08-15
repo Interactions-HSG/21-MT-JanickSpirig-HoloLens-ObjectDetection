@@ -2,36 +2,52 @@
 With this repository you can access and evaluate the camera stream of your Microsoft Hololens to recognize at what objects the user is currently looking at. 
 The code is largely a combination of two repositories.
 - Access Hololens camera stream: [IntelligentEdgeHOL](https://github.com/Azure/IntelligentEdgeHOL)
-- Run YOLOv4 object recognition for a single frame: [tensorflow-yolov4-tflite](https://github.com/theAIGuysCode/tensorflow-yolov4-tflite)
+- Run YOLOv4 object detection for a single frame: [tensorflow-yolov4-tflite](https://github.com/theAIGuysCode/tensorflow-yolov4-tflite)
 
 ## Geeting Started
 
-### 1 Device Portal Credentials
-[Configure](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/platform-capabilities-and-apis/using-the-windows-device-portal) the Hololens Device Portal as explained. Save and remember [your user credentials](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/platform-capabilities-and-apis/using-the-windows-device-portal#creating-a-username-and-password).
+### [1] Device Portal Credentials
+[Configure](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/platform-capabilities-and-apis/using-the-windows-device-portal) the Hololens Device Portal. Save and remember [your user credentials](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/platform-capabilities-and-apis/using-the-windows-device-portal#creating-a-username-and-password).
 
-### 2 Clone repository
+### [2] Clone repository
+`git clone https://github.com/Interactions-HSG/21-MT-JanickSpirig-DC-Holo`
 
-### 3 Setup YOLOv4
+### [3] Setup YOLOv4
 - Open a terminal window and cd to modules\YoloModule\app\detector
-- Create your conda environment (either CPU or GPU) as explained [here](https://github.com/theAIGuysCode/tensorflow-yolov4-tflite#conda-recommended).  
-- Download the pre-traiend COCO weights ([yolov4.weights](https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT), [yolov4-tiny.weights](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights)) __OR__ train yolo for your custom classes by following the steps in [this video](https://www.youtube.com/watch?v=mmj3nxGT2YQ) 
-- Move the according `.weights` file (pretrained or custom) into the folder detector\data. If you use custom wieights, make sure that the file is named as `custom.weights`
-- If you use custom weights, place your `.names` file into folder detector\data and comment out line 15 in file detector\core\config.py and comment line 14. It should look like in the screenshot below. Remember that anytime you switch between custom wnd pretrained COCO weights you have to adjust these two lines of code.
+- Create and activate your conda environment by first [downloading anaconda](https://docs.anaconda.com/anaconda/install/index.html) and then executing one of the commands below in terminal (either CPU or GPU)
 
-<img width="541" alt="Screenshot 2021-08-05 at 17 05 09" src="https://user-images.githubusercontent.com/43849960/128373749-93844a5c-46dd-4f6c-90e9-1e20fde31e86.png">
-  
-- Convert the yolo weights from darkent to TensorFlow format by executing one of the commands below in the terminal (cd to folder detector)
 ```
+cd modules/YoloModule/app/detector/
+
+# CPU
+conda env create -f conda-cpu.yml
+conda activate yolov4-cpu
+
+# GPU
+conda env create -f conda-gpu.yml
+conda activate yolov4-gpu
+```
+
+- Download the pre-traiend [coco weights](https://cocodataset.org/#home) ([yolov4.weights](https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT), [yolov4-tiny.weights](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights)) __OR__ train yolo for your custom classes by following the steps in [this video](https://www.youtube.com/watch?v=mmj3nxGT2YQ) 
+- Move the according `.weights` file (pretrained or custom) into the folder detector\data. If you use custom wieights, make sure that the file is named as `custom.weights`
+- If you use custom weights, place your custom `.names` file (e.g. `obj.names`) into folder detector\data and comment out line 18 in file detector\core\config.py and comment line 15. It should look like in the screenshot below. Remember that anytime you switch between custom wnd pretrained coco weights (pre-trained) you have to adjust these two lines of code.
+
+<img width="541" alt="Screenshot 2021-08-15 at 15 04 22" src="https://user-images.githubusercontent.com/43849960/129479546-edf3ba64-9743-4e59-96b2-e42444e83af5.png">
+
+- Convert the yolo weights from darkent to TensorFlow format by executing one of the commands below in the terminal
+```
+cd modules/YoloModule/app
+
 # pretrained
-python save_model.py --weights ./data/yolov4.weights --output ./checkpoints/yolov4-416 --input_size 416 --model yolov4 
+python save_model.py --weights detector/data/yolov4.weights --output detector/checkpoints/yolov4-416 --input_size 416 --model yolov4 
 
 # pretrained tiny
-python save_model.py --weights ./data/yolov4-tiny.weights --output ./checkpoints/yolov4-tiny-416 --input_size 416 --model yolov4 --tiny
+python save_model.py --weights detector/data/yolov4-tiny.weights --output detector/checkpoints/yolov4-tiny-416 --input_size 416 --model yolov4 --tiny
 
 # custom
-python save_model.py --weights ./data/custom.weights --output ./checkpoints/custom-416 --input_size 416 --model yolov4 
+python save_model.py --weights detector/data/custom.weights --output detector/checkpoints/custom-416 --input_size 416 --model yolov4 
 ```
-### 4 Setup conifg.yml
+### [4] Setup conifg.yml
 Define the options in the file `config.yml` according to your needs.  
 
 | Parameter  | Details |
@@ -49,9 +65,9 @@ Define the options in the file `config.yml` according to your needs.
 |`HOLO_ENDPOINT_URL`  | Defines the URL and Port of the endpoint (e.g. http://10.2.1.233:5050) to which an HTTP Get request will be sent to whenever a new object has been detected (`http://{HOLO_ENDPOINT_URL}/?{class_label}=1`). Remember to define the port in the URL if necessary |
 
 
-### 5 Run the detection
+### [5] Run the detection
 Now you are all set and ready to run YOLOv4 object detection on the Microsoft Hololens PV camera. Execute following steps to start the detection.
 1. Start up the Hololens and log in. Make sure it is charged sufficiently as the PV camera has heavy battery usage.
 2. Activate the conda environment. Open a terminal and execute `conda activate yolov4-cpu` for CPU or `conda activate yolov4-gpu` for GPU.
-3. `cd` to */modules/YoloModule/app/*
-4. Run `python main.py`
+3. `cd modules/YoloModule/app`
+4. `python main.py`
