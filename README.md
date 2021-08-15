@@ -33,6 +33,12 @@ python save_model.py --weights ./data/custom.weights --output ./checkpoints/cust
 ```
 ### 4 Setup conifg.yml
 Define the options in the file `config.yml` according to your needs.  
+
+| Parameter  | Details |
+| ------------- | ------------- |
+| `CUSTOM`  | Defines wehter YOLOv4 has been trained for custom classes. Set to `TRUE` if you have set up YOLOv4 for custom classes |
+| `CUSTOM_CLASSES` | Stores the labels of all custom classes. If `CUSTOM` is set to true, list here all class labels as bullet points (use `-` and isnert line break after each label  |
+
 - `CUSTOM` defines wehter YOLOv4 has been trained for custom classes. Set to `TRUE` if you have set up YOLOv4 for custom classes.
 - `CUSTOM_CLASSES` stores the labels of all custom classes. If `CUSTOM` is set to true, list here all class labels as bullet points (use `-` and isnert line break after each label.
 - `USE_YOLO-TINY` defines whether the yolo wieghts are tiny or normal ones. Set to `TRUE` if you are using tiny wieghts.
