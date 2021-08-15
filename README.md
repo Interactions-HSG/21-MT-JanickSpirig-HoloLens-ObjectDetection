@@ -14,7 +14,7 @@ The code is largely a combination of two repositories.
 ### 3 Setup YOLOv4
 - Open a terminal window and cd to modules\YoloModule\app\detector
 - Create your conda environment (either CPU or GPU) as explained [here](https://github.com/theAIGuysCode/tensorflow-yolov4-tflite#conda-recommended).  
-Download the pre-traiend COCO weights ([yolov4.weights](https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT), [yolov4-tiny.weights](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights)) __OR__ train yolo for your custom classes by following the steps in [this video](https://www.youtube.com/watch?v=mmj3nxGT2YQ) 
+- Download the pre-traiend COCO weights ([yolov4.weights](https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT), [yolov4-tiny.weights](https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights)) __OR__ train yolo for your custom classes by following the steps in [this video](https://www.youtube.com/watch?v=mmj3nxGT2YQ) 
 - Move the according `.weights` file (pretrained or custom) into the folder detector\data. If you use custom wieights, make sure that the file is named as `custom.weights`
 - If you use custom weights, comment out line 15 in file *detector\core\config.py* and comment line 14. It should look like in the screenshot below. Remember that anytime you switch between custom wnd pretrained COCO weights you have to adjust these two lines of code.
 
