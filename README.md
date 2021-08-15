@@ -34,8 +34,10 @@ conda activate yolov4-gpu
 
 <img width="541" alt="Screenshot 2021-08-15 at 15 04 22" src="https://user-images.githubusercontent.com/43849960/129479546-edf3ba64-9743-4e59-96b2-e42444e83af5.png">
 
-- Convert the yolo weights from darkent to TensorFlow format by executing one of the commands below in the terminal (cd to folder detector)
+- Convert the yolo weights from darkent to TensorFlow format by executing one of the commands below in the terminal
 ```
+cd modules/YoloModule/app
+
 # pretrained
 python save_model.py --weights ./data/yolov4.weights --output ./checkpoints/yolov4-416 --input_size 416 --model yolov4 
 
@@ -67,5 +69,5 @@ Define the options in the file `config.yml` according to your needs.
 Now you are all set and ready to run YOLOv4 object detection on the Microsoft Hololens PV camera. Execute following steps to start the detection.
 1. Start up the Hololens and log in. Make sure it is charged sufficiently as the PV camera has heavy battery usage.
 2. Activate the conda environment. Open a terminal and execute `conda activate yolov4-cpu` for CPU or `conda activate yolov4-gpu` for GPU.
-3. `cd` to */modules/YoloModule/app/*
-4. Run `python main.py`
+3. `cd modules/YoloModule/app`
+4. `python main.py`
