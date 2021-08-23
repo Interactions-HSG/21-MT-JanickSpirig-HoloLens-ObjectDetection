@@ -240,8 +240,10 @@ class VideoCapture(object):
 
                 fps = 1.0 / (time.time() - tFrameStart)
 
-                # do we need to update index_boundary (this is the case when fps rate has changed significantly)
+                # update index boundary if FPS rate has changed significantly, tests have shown that all equal or below 0.3 is not significant
                 if (fps - last_fps) > 0.3:
+                    # how many elements back in the queue we have to scan for an object
+                    # index_boundary is the index position of the frame that was processed MIN_SECONDS ago
                     index_boundary = int(round(fps / (1/self.recommendation_thresh), 0))
             
                 print("FPS: %.2f" % fps)
@@ -260,6 +262,7 @@ class VideoCapture(object):
                         classLabel, confidence = detection[0], detection[1]
                         if confidence > self.confidenceLevel:
                             
+                            # as we don't care about the color becuase we retrieve the current air quality from the sensor directly and not over the color of the hue lamp
                             if "hue" in classLabel:
                                 classLabel = "hue"
 
@@ -268,27 +271,33 @@ class VideoCapture(object):
                             print("Object: {}".format(classLabel))
                             print("Confidence: {}".format(confidence))
 
+                            # if notification should be send out to endpoint that thing is present
                             if self.holo_endpoint:
                                 try:
+                                    # we only send the notification once, when the state changes from 0 to 1
                                     if self.apiHandler.statusHandler.statuses[classLabel] != 1:
 
                                         ThingIsThere = True
                                         
+                                        # if queue is already long enough, will equal to False for the first few frames
                                         if len(detections_queue) >= index_boundary:  
+                                            # iterate over each previous detection
                                             for i in detections_queue:
-                                                # check if thing has been detected x seconds ago
-                                                # print(i)
+                                                # check if thing has been detected in each previous frame of the queue
                                                 if any(classLabel in sl for sl in i):
                                                     continue
                                                 else:
+                                                    # thing is relatively new / user is not looking long enough at the thing
                                                     ThingIsThere = False
                                                     break 
                                         else:
+                                            # thing is there and notification has already been sent
                                             ThingIsThere = False
                                         
                                         if ThingIsThere:
                                             print("Thing is there")
                                             self.apiHandler.handleThing(thing=classLabel, display=1) # send call to display all actions on the Hololens that are related with this object
+                                
                                 # when thing is not of interest to us
                                 except KeyError:
                                     pass
@@ -296,6 +305,7 @@ class VideoCapture(object):
                 # build the new queue element
                 try:
                     if len(queue_list) > 0:
+                        # made some detections
                         detections_queue.append(queue_list)
                         queue_list = []
                     else:
@@ -305,16 +315,18 @@ class VideoCapture(object):
                     # no detections at all
                     detections_queue.append(["NaN"])
                          
-                # update queue
+                # calculate new first element of queue
                 first_element = len(detections_queue) - index_boundary
                 if first_element > 0:
+                    # update queue, leave out elements that are longer than MIN_TIME seconds ago
                     detections_queue = detections_queue[first_element:]
 
                 print(detections_queue)
 
-                # check if all object are still there
+                # get list of all objects that are currently there
                 things_displayed = [thing for thing, pres in self.apiHandler.statusHandler.statuses.items() if pres == 1]
 
+                # check if all object are still there
                 for thing in things_displayed: 
                     # check if thing is still somewhere in the queue
                     ThingIsThere = False
@@ -323,12 +335,13 @@ class VideoCapture(object):
                             ThingIsThere = True
                             break
                     
+                    # thing is no longer in queue
                     if not ThingIsThere:
-                        
+                        # update state
                         self.apiHandler.handleThing(thing=thing, display=0)
                         print("Thing {} is not present anymore.".format(thing))
                 
-            # Calculate FPS
+            # Calculate FPS rate at which the VideoCapture is able to process the frames
             timeElapsedInMs = (time.time() - tFrameStart) * 1000
             currentFPS = 1000.0 / timeElapsedInMs
 
