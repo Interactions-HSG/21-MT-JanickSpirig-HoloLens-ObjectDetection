@@ -1,4 +1,4 @@
-# Hololens YOLOv4 Object Recognition
+# Hololens YOLOv4 Object Detection
 With this repository you can access and evaluate the camera stream of your Microsoft Hololens to recognize at what objects the user is currently looking at. 
 The code is largely a combination of two repositories.
 - Access video-stream of Hololens PV camera: [IntelligentEdgeHOL](https://github.com/Azure/IntelligentEdgeHOL)
