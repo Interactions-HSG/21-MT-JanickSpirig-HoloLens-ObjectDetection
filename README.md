@@ -50,7 +50,7 @@ python save_model.py --weights detector/data/yolov4.weights --output detector/ch
 python save_model.py --weights detector/data/yolov4-tiny.weights --output detector/checkpoints/yolov4-tiny-416 --input_size 416 --model yolov4 --tiny
 
 # custom
-python save_model.py --weights detector/data/custom.weights --output detector/checkpoints/custom-416 --input_size 416 --model yolov4 
+python save_model.py --weights detector/data/custom.weights --output detector/checkpoints/custom-416 --input_size 416 --model yolov4 --tiny
 ```
 ### [4] Setup conifg.yml
 Define the options in the file `config.yml` according to your needs.  
