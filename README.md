@@ -4,6 +4,9 @@ The code is largely a combination of two repositories.
 - Access video-stream of Hololens PV camera: [IntelligentEdgeHOL](https://github.com/Azure/IntelligentEdgeHOL)
 - Run YOLOv4 object detection: [tensorflow-yolov4-tflite](https://github.com/theAIGuysCode/tensorflow-yolov4-tflite)
 
+> [!TIP]
+> For a version of this code that works with YOLOv7 see this repo: [Interactions-HSG/blearvis](https://github.com/Interactions-HSG/blearvis/tree/main/code/HoloLens/BLEARVIS-Desktop-ObjectDetection).
+
 ## Imported links Interactions @ ICS-HSG
 - [Pre-trained weights](https://drive.google.com/file/d/10xhruakVoIGTGAzH7BTxPX7rrcfWJByo/view?usp=sharing)
 - [Dataset](https://drive.google.com/file/d/1BIaNZc5XUflGz9IqpJOeGOvYWzgVebk-/view?usp=sharing) of train images and label files
